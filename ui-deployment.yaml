@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-ui
+  namespace: demo
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: react-ui
+
+  template:
+    metadata:
+      labels:
+        app: react-ui
+
+    spec:
+      containers:
+      - name: react-ui
+        image: bharathiacr123.azurecr.io/react-ui:v1
+
+        ports:
+        - containerPort: 80

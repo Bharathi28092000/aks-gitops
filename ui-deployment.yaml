@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: react-ui
-        image: bharathiacr123.azurecr.io/react-ui:v2
+        image: bharathiacr123.azurecr.io/react-ui:v3
 
         ports:
         - containerPort: 80

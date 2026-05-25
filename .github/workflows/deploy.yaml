@@ -1,0 +1,62 @@
+name: AKS GitOps Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build-and-push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Login to Azure
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Login to ACR
+      run: |
+        docker login ${{ secrets.ACR_LOGIN_SERVER }} \
+        -u ${{ secrets.ACR_USERNAME }} \
+        -p ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build React UI
+      run: |
+        docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/react-ui:${{ github.sha }} ./ui
+
+    - name: Build Node API
+      run: |
+        docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/node-api:${{ github.sha }} ./api
+
+    - name: Push React UI
+      run: |
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/react-ui:${{ github.sha }}
+
+    - name: Push Node API
+      run: |
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-api:${{ github.sha }}
+
+    - name: Update UI Deployment YAML
+      run: |
+        sed -i "s|image:.*react-ui.*|image: ${{ secrets.ACR_LOGIN_SERVER }}/react-ui:${{ github.sha }}|g" k8s/ui-deployment.yaml
+
+    - name: Update API Deployment YAML
+      run: |
+        sed -i "s|image:.*node-api.*|image: ${{ secrets.ACR_LOGIN_SERVER }}/node-api:${{ github.sha }}|g" k8s/api-deployment.yaml
+
+    - name: Commit Updated YAML
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+
+        git add .
+        git commit -m "Update image tags"
+
+        git push

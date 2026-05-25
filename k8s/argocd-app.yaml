@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: 'https://github.com/Bharathi28092000/aks-gitops.git'
     targetRevision: HEAD
-    path: .
+    path: k8s
 
   destination:
     server: 'https://kubernetes.default.svc'
@@ -19,5 +19,5 @@ spec:
 
   syncPolicy:
     automated:
-      prune: true
+      prune: false
       selfHeal: true

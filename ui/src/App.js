@@ -34,7 +34,7 @@ function App() {
       }}
     >
 
-      <h1>AKS GitOps Deployment Successful 🚀</h1>
+      <h1>Final AKS GitOps Automation Working 🚀</h1>
 
       <h2>End-to-End DevOps Pipeline</h2>
 

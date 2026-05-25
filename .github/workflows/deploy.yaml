@@ -22,10 +22,11 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Login to ACR
-      run: |
-        docker login ${{ secrets.ACR_LOGIN_SERVER }} \
-        -u ${{ secrets.ACR_USERNAME }} \
-        -p ${{ secrets.ACR_PASSWORD }}
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ secrets.ACR_LOGIN_SERVER }}
+        username: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+        password: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
 
     - name: Build React UI
       run: |

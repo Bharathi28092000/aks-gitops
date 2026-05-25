@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: node-api
-        image: bharathiacr123.azurecr.io/node-api:d484d6d45e7252793680c82c1e91ab578ea8035a
+        image: bharathiacr123.azurecr.io/node-api:02a56b280abb40aff62572a983252b5fc6c3e873
 
         ports:
         - containerPort: 5000

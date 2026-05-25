@@ -48,11 +48,11 @@ jobs:
 
     - name: Update UI Deployment YAML
       run: |
-        sed -i "s|image:.*react-ui.*|image: ${{ secrets.ACR_LOGIN_SERVER }}/react-ui:${{ github.sha }}|g" k8s/ui-deployment.yaml
+        sed -i "s|${{ secrets.ACR_LOGIN_SERVER }}/react-ui:.*|${{ secrets.ACR_LOGIN_SERVER }}/react-ui:${{ github.sha }}|g" k8s/ui-deployment.yaml
 
     - name: Update API Deployment YAML
       run: |
-        sed -i "s|image:.*node-api.*|image: ${{ secrets.ACR_LOGIN_SERVER }}/node-api:${{ github.sha }}|g" k8s/api-deployment.yaml
+        sed -i "s|${{ secrets.ACR_LOGIN_SERVER }}/node-api:.*|${{ secrets.ACR_LOGIN_SERVER }}/node-api:${{ github.sha }}|g" k8s/api-deployment.yaml
 
     - name: Commit Updated YAML
       run: |

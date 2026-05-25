@@ -28,7 +28,7 @@ function App() {
 
     <div style={{ padding: "40px" }}>
 
-      <h1>GitOps Deployment Success 🚀</h1>
+      <h1>AKS CI/CD Successfully Working 🚀</h1>
 
       <button onClick={callAPI}>
         Call API

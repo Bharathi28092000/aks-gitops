@@ -15,6 +15,8 @@ jobs:
 
     - name: Checkout Code
       uses: actions/checkout@v4
+      with:
+        persist-credentials: true
 
     - name: Login to Azure
       uses: azure/login@v2
@@ -54,10 +56,11 @@ jobs:
 
     - name: Commit Updated YAML
       run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
 
         git add .
-        git commit -m "Update image tags"
 
-        git push
+        git commit -m "Update image tags" || echo "No changes to commit"
+
+        git push origin master
